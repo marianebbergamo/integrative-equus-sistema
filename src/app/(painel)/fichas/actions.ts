@@ -4,6 +4,41 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
+// Dá baixa no lote de validade mais próxima com saldo suficiente. Se não
+// houver lote com saldo (produto ainda sem entrada registrada no Estoque),
+// não bloqueia o fechamento: só não há o que baixar.
+async function baixarEstoque(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  atendimentoId: string,
+  produtoId: string,
+  quantidade: number,
+) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data: lote } = await supabase
+    .from("estoque_lotes")
+    .select("id, quantidade")
+    .eq("produto_id", produtoId)
+    .gte("quantidade", quantidade)
+    .order("validade", { ascending: true, nullsFirst: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (!lote) return;
+
+  await supabase.from("estoque_movimentacoes").insert({
+    produto_id: produtoId,
+    lote_id: lote.id,
+    tipo: "saida",
+    quantidade,
+    atendimento_id: atendimentoId,
+    usuario_id: user?.id ?? null,
+    motivo: "Atendimento",
+  });
+}
+
 export async function salvarFicha(
   atendimentoId: string,
   animalId: string,
@@ -146,7 +181,7 @@ export async function adicionarItemExtra(atendimentoId: string, formData: FormDa
     const cobrar = formData.get("cobrar") === "on";
     const { data: produto } = await supabase
       .from("produtos")
-      .select("preco_venda")
+      .select("preco_venda, controla_lote_validade")
       .eq("id", produtoId)
       .single();
 
@@ -161,6 +196,10 @@ export async function adicionarItemExtra(atendimentoId: string, formData: FormDa
       realizado: true,
     });
     if (error) throw new Error("Não foi possível adicionar o produto: " + error.message);
+
+    if (produto?.controla_lote_validade) {
+      await baixarEstoque(supabase, atendimentoId, produtoId, quantidade);
+    }
   }
 
   revalidatePath(`/fichas/${atendimentoId}/fechamento`);
