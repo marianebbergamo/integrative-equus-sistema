@@ -23,8 +23,11 @@ export function TableHead(props: HTMLAttributes<HTMLTableSectionElement>) {
   );
 }
 
-export function TableRow(props: HTMLAttributes<HTMLTableRowElement>) {
-  return <tr className="border-t border-[#eee8e0]" {...props} />;
+export function TableRow({
+  className = "",
+  ...props
+}: HTMLAttributes<HTMLTableRowElement>) {
+  return <tr className={`border-t border-[#eee8e0] ${className}`} {...props} />;
 }
 
 export function Th({

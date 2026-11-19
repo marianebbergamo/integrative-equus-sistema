@@ -4,7 +4,7 @@
 
 create function validar_convite_cadastro(p_token uuid)
 returns table (convite_id uuid, cliente_id uuid, valido boolean) as $$
-  select id, convites_cadastro.cliente_id, (validade > now() and usado_em is null)
+  select id, convites_cadastro.cliente_id, (validade > now())
   from convites_cadastro
   where token = p_token;
 $$ language sql security definer stable set search_path = public;

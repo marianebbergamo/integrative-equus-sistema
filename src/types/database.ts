@@ -1286,6 +1286,21 @@ export type Database = {
         }
         Returns: string
       }
+      listar_animais_por_convite: {
+        Args: { p_token: string }
+        Returns: {
+          id: string
+          nome: string
+        }[]
+      }
+      listar_locais_cadastro: {
+        Args: { p_busca?: string }
+        Returns: {
+          cidade: string
+          id: string
+          nome: string
+        }[]
+      }
       usuario_atual_ativo: { Args: never; Returns: boolean }
       usuario_atual_perfil: {
         Args: never
