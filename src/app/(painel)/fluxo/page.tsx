@@ -17,9 +17,9 @@ const COLUNAS: {
   { etapa: "a_agendar", numero: 3, nome: "A agendar", acao: "Agendar", href: () => `/agenda` },
   { etapa: "agendado", numero: 4, nome: "Agendado", acao: "Ver na agenda", href: () => `/agenda` },
   { etapa: "registrar_atendimento", numero: 5, nome: "Registrar atendimento", acao: "Preencher ficha e fechar", href: (id) => `/fichas/${id}` },
-  { etapa: "a_cobrar", numero: 6, nome: "A cobrar", acao: "Enviar cobrança", href: () => `/financeiro` },
-  { etapa: "aguardando_pagamento", numero: 7, nome: "Aguardando pagamento", acao: "Confirmar recebimento", href: () => `/financeiro` },
-  { etapa: "emitir_nota_fiscal", numero: 8, nome: "Emitir nota fiscal", acao: "Emitir NF", href: () => `/notas-fiscais` },
+  { etapa: "a_cobrar", numero: 6, nome: "A cobrar", acao: "Enviar cobrança", href: () => `/financeiro?aba=cobrar` },
+  { etapa: "aguardando_pagamento", numero: 7, nome: "Aguardando pagamento", acao: "Confirmar recebimento", href: () => `/financeiro?aba=aguardando` },
+  { etapa: "emitir_nota_fiscal", numero: 8, nome: "Emitir nota fiscal", acao: "Emitir NF", href: () => `/financeiro?aba=nf` },
 ];
 
 const FASES = [
