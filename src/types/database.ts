@@ -1143,7 +1143,7 @@ export type Database = {
           duracao_media_minutos: number | null
           id: string
           nome: string
-          quem_realiza: Database["public"]["Enums"]["perfil_usuario"] | null
+          quem_realiza_id: string | null
           retorno_dias: number | null
           tipo_ficha: string | null
           unidade_cobranca: Database["public"]["Enums"]["unidade_cobranca_servico"]
@@ -1157,7 +1157,7 @@ export type Database = {
           duracao_media_minutos?: number | null
           id?: string
           nome: string
-          quem_realiza?: Database["public"]["Enums"]["perfil_usuario"] | null
+          quem_realiza_id?: string | null
           retorno_dias?: number | null
           tipo_ficha?: string | null
           unidade_cobranca: Database["public"]["Enums"]["unidade_cobranca_servico"]
@@ -1171,14 +1171,22 @@ export type Database = {
           duracao_media_minutos?: number | null
           id?: string
           nome?: string
-          quem_realiza?: Database["public"]["Enums"]["perfil_usuario"] | null
+          quem_realiza_id?: string | null
           retorno_dias?: number | null
           tipo_ficha?: string | null
           unidade_cobranca?: Database["public"]["Enums"]["unidade_cobranca_servico"]
           updated_at?: string
           valor?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "servicos_quem_realiza_id_fkey"
+            columns: ["quem_realiza_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       usuarios: {
         Row: {
@@ -1350,6 +1358,8 @@ export type Database = {
         | "animal"
         | "pacote"
         | "hora"
+        | "projecao"
+        | "aplicacao"
       unidade_uso_produto:
         | "ml"
         | "mg"
@@ -1357,6 +1367,8 @@ export type Database = {
         | "unidade"
         | "frasco"
         | "comprimido"
+        | "caixa"
+        | "metro"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1520,6 +1532,8 @@ export const Constants = {
         "animal",
         "pacote",
         "hora",
+        "projecao",
+        "aplicacao",
       ],
       unidade_uso_produto: [
         "ml",
@@ -1528,6 +1542,8 @@ export const Constants = {
         "unidade",
         "frasco",
         "comprimido",
+        "caixa",
+        "metro",
       ],
     },
   },

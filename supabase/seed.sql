@@ -18,5 +18,18 @@ select id, 'Mariane', email, 'administrador' from auth.users where email = 'mari
 insert into usuarios (id, nome, email, perfil)
 select id, 'Bruno', email, 'veterinario' from auth.users where email = 'brunoc.evaristo@gmail.com';
 
--- Os 11 tipos de ficha e seus campos ainda não foram definidos (ver
--- "Pontos em aberto"). ficha_modelos fica vazia até essa decisão.
+-- Os 11 tipos de ficha, vistos na tela 13-Servicos.dc.html (seletor
+-- "Ficha de atendimento"). Os campos de cada um ainda não foram
+-- definidos (ver "Pontos em aberto").
+insert into ficha_modelos (nome) values
+  ('Quiropraxia'),
+  ('Geral'),
+  ('Ortopédico'),
+  ('Fisioterapia'),
+  ('Odontologia'),
+  ('Controle sanitário'),
+  ('Exame clínico'),
+  ('Dermatologia'),
+  ('Reprodução'),
+  ('Neurológico'),
+  ('Nutrição');
