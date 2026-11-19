@@ -263,6 +263,7 @@ export type Database = {
           motivo_recusa: string | null
           numero: number
           observacoes: string | null
+          observacoes_financeiro: string | null
           origem: Database["public"]["Enums"]["origem_atendimento"]
           subtotal: number
           total: number
@@ -288,6 +289,7 @@ export type Database = {
           motivo_recusa?: string | null
           numero?: number
           observacoes?: string | null
+          observacoes_financeiro?: string | null
           origem?: Database["public"]["Enums"]["origem_atendimento"]
           subtotal?: number
           total?: number
@@ -313,6 +315,7 @@ export type Database = {
           motivo_recusa?: string | null
           numero?: number
           observacoes?: string | null
+          observacoes_financeiro?: string | null
           origem?: Database["public"]["Enums"]["origem_atendimento"]
           subtotal?: number
           total?: number
