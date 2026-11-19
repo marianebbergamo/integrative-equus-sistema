@@ -92,8 +92,58 @@ export async function salvarFicha(
     await supabase.from("atendimento_itens").update({ realizado }).eq("id", itemId);
   }
 
+  await sincronizarRetorno(supabase, atendimentoId, animalId, retornoDias);
+
   revalidatePath(`/fichas/${atendimentoId}`);
   return fichaId;
+}
+
+// Mantém no máximo um retorno "a vencer" por animal+serviço vindo desta ficha:
+// remove o anterior (ficha pode ser salva de novo com outro prazo) e cria o novo.
+async function sincronizarRetorno(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  atendimentoId: string,
+  animalId: string,
+  retornoDias: number | null,
+) {
+  const { data: item } = await supabase
+    .from("atendimento_itens")
+    .select("servico_id")
+    .eq("atendimento_id", atendimentoId)
+    .eq("animal_id", animalId)
+    .eq("tipo", "servico")
+    .not("servico_id", "is", null)
+    .limit(1)
+    .maybeSingle();
+
+  let consultaExistente = supabase
+    .from("retornos")
+    .select("id")
+    .eq("animal_id", animalId)
+    .eq("situacao", "a_vencer");
+  consultaExistente = item?.servico_id
+    ? consultaExistente.eq("servico_id", item.servico_id)
+    : consultaExistente.is("servico_id", null);
+  const { data: existentes } = await consultaExistente;
+
+  if (existentes && existentes.length > 0) {
+    await supabase
+      .from("retornos")
+      .delete()
+      .in("id", existentes.map((r) => r.id));
+  }
+
+  if (!retornoDias) return;
+
+  const dataPrevista = new Date();
+  dataPrevista.setDate(dataPrevista.getDate() + retornoDias);
+
+  await supabase.from("retornos").insert({
+    animal_id: animalId,
+    servico_id: item?.servico_id ?? null,
+    data_prevista: dataPrevista.toISOString().slice(0, 10),
+    situacao: "a_vencer",
+  });
 }
 
 export async function enviarParaFechamento(
