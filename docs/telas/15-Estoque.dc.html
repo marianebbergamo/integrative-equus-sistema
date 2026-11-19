@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Estoque</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;min-height:100vh;display:flex;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 248px;max-width:100%;background:#7B2234">
+<dc-import name="Sidebar" active="estoque" hint-size="248px,780px"></dc-import>
+</div>
+<main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:32px 40px 48px;display:flex;flex-direction:column;gap:22px">
+
+<header style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:36px;line-height:1.1">Estoque</h1>
+<div style="font-size:15px;color:#5A5D5E">A saída é automática no fechamento de cada atendimento. Aqui entram as compras e os ajustes.</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;color:#2B2627;text-decoration:none;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer">Conferir inventário</button>
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;color:#2B2627;text-decoration:none;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer">Lista de compras · 3</button>
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;border:0;background:#7B2234;color:#FFFFFF;text-decoration:none;font:inherit;font-weight:600;font-size:15px;cursor:pointer">Registrar entrada</button>
+</div>
+</header>
+
+<section aria-label="Resumo do estoque" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px">
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Abaixo do mínimo</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px;color:#7B2234">3</span></div>
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Vencem em 60 dias</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px;color:#6E4700">2</span></div>
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Produtos controlados</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px;color:#2B2627">131</span></div>
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Saídas em novembro</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px;color:#2B2627">86</span></div>
+</section>
+
+<div role="group" aria-label="Filtros" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{ filtros }}" as="f" hint-placeholder-count="4">
+<button type="button" onClick="{{ f.pick }}" style="height:44px;padding:0 16px;border-radius:999px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.fg }};font:inherit;font-size:14px;font-weight:600;cursor:pointer">{{ f.label }}</button>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+
+<section style="flex:999 1 520px;min-width:0;background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:6px 22px 14px">
+<div style="overflow-x:auto">
+<table style="width:100%;min-width:640px;border-collapse:collapse;font-size:15px">
+<thead><tr style="text-align:left;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5A5D5E">
+<th style="padding:14px 10px 10px;font-weight:600;padding-left:0">Produto</th>
+<th style="padding:14px 10px 10px;font-weight:600;text-align:right">Em estoque</th>
+<th style="padding:14px 10px 10px;font-weight:600;text-align:right">Mínimo</th>
+<th style="padding:14px 10px 10px;font-weight:600">Validade mais próxima</th>
+<th style="padding:14px 10px 10px;font-weight:600">Situação</th>
+<th style="padding:14px 10px 10px;font-weight:600;padding-right:0">Ação</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{ itens }}" as="i" hint-placeholder-count="8">
+<tr style="border-top:1px solid #EEE8E0">
+<td style="padding:12px 10px;padding-left:0"><a href="Produtos.dc.html" style="font-weight:600;text-decoration:none">{{ i.nome }}</a></td>
+<td style="padding:12px 10px;text-align:right;font-weight:600;white-space:nowrap">{{ i.qtd }}</td>
+<td style="padding:12px 10px;text-align:right">{{ i.min }}</td>
+<td style="padding:12px 10px;white-space:nowrap">{{ i.val }}</td>
+<td style="padding:12px 10px"><span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;background:{{ i.pb }};color:{{ i.pf }}">{{ i.sit }}</span></td>
+<td style="padding:8px 0 8px 10px"><button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #7B2234;background:#FFFFFF;color:#7B2234;text-decoration:none;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer">Dar entrada</button></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<aside aria-label="Últimas movimentações" style="flex:1 1 320px;min-width:0;background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Últimas movimentações</h2>
+<sc-for list="{{ movs }}" as="m" hint-placeholder-count="6">
+<div style="display:flex;gap:12px;border-top:1px solid #EEE8E0;padding-top:10px;align-items:flex-start">
+<div style="flex:none;width:44px;font-size:15px;font-weight:700;color:{{ m.cor }}">{{ m.q }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+<div style="font-size:14px;font-weight:600">{{ m.prod }}</div>
+<div style="font-size:13px;color:#5A5D5E">{{ m.origem }}</div>
+</div>
+<div style="flex:none;font-size:13px;color:#5A5D5E">{{ m.dia }}</div>
+</div>
+</sc-for>
+<a href="#" style="font-size:14px;font-weight:600;padding-top:4px">Ver todo o histórico</a>
+</aside>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+const pills = (key, opts) => { const sel = (this.state && this.state[key]) || opts[0]; return opts.map((label) => ({ label, bg: label === sel ? '#2B2627' : '#FFFFFF', fg: label === sel ? '#FFFFFF' : '#2B2627', bd: label === sel ? '#2B2627' : '#CFC8BF', pick: () => this.setState({ [key]: label }) })); };
+const tone = { ok: ['#E4EFE4', '#2A5434'], warn: ['#FBF0D9', '#6E4700'], bad: ['#F3E7E9', '#7B2234'], info: ['#E3EDF7', '#1F4E79'], mute: ['#EEEAE4', '#4A4546'] };
+const i = (nome, qtd, min, val, t, sit) => ({ nome, qtd, min, val, sit, pb: tone[t][0], pf: tone[t][1], t });
+const todos = [
+i('Sedativo · [NOME] · 10 ml', '2 frascos', 4, '03/2027', 'bad', 'Abaixo do mínimo'),
+i('Agulha 40x12', '1 caixa', 3, 'sem validade', 'bad', 'Abaixo do mínimo'),
+i('Bandagem elástica · 10 cm', '5 un', 10, 'sem validade', 'bad', 'Abaixo do mínimo'),
+i('Anestésico local · [NOME] · 50 ml', '6 frascos', 3, '12/2026', 'warn', 'Vence em 40 dias'),
+i('Anti-inflamatório · [NOME] · 100 ml', '380 ml', 200, '01/2027', 'warn', 'Vence em 55 dias'),
+i('Gel condutor · 250 g', '8 un', 4, '08/2027', 'ok', 'Em dia'),
+i('Seringa 20 ml', '64 un', 30, '05/2028', 'ok', 'Em dia'),
+i('Malha tubular', '22 m', 10, 'sem validade', 'ok', 'Em dia')
+];
+const sel = (this.state && this.state.f) || 'Todos';
+const mapa = { 'Abaixo do mínimo': 'bad', 'Vencendo': 'warn' };
+const m = (q, prod, origem, dia) => ({ q, prod, origem, dia, cor: q.charAt(0) === '+' ? '#2A5434' : '#7B2234' });
+return { filtros: pills('f', ['Todos', 'Abaixo do mínimo', 'Vencendo']),
+itens: sel === 'Todos' ? todos : todos.filter((x) => x.t === mapa[sel]),
+movs: [
+m('−1', 'Sedativo · 10 ml', 'Atendimento · CT Dois Irmãos · Bruno', '18/11'),
+m('−2', 'Bandagem elástica', 'Atendimento · CT Dois Irmãos · Bruno', '18/11'),
+m('−1', 'Gel condutor · 250 g', 'Atendimento · CT Dois Irmãos · Bruno', '18/11'),
+m('+50', 'Seringa 20 ml', 'Compra · nota [Nº]', '16/11'),
+m('−20', 'Anti-inflamatório (ml)', 'Atendimento · Haras Santa Clara · Fabi', '17/11'),
+m('−1', 'Agulha 40x12', 'Ajuste de inventário · Fabi', '14/11')
+] };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Serviços e valores</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;min-height:100vh;display:flex;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 248px;max-width:100%;background:#7B2234">
+<dc-import name="Sidebar" active="servicos" hint-size="248px,780px"></dc-import>
+</div>
+<main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:32px 40px 48px;display:flex;flex-direction:column;gap:22px">
+
+<header style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:36px;line-height:1.1">Serviços e valores</h1>
+<div style="font-size:15px;color:#5A5D5E">O catálogo que alimenta proposta, agenda, ficha e cobrança.</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+<input type="search" aria-label="Buscar serviço" placeholder="Buscar serviço" style="box-sizing:border-box;width:280px;max-width:100%;height:44px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;color:#2B2627">
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;border:0;background:#7B2234;color:#FFFFFF;text-decoration:none;font:inherit;font-weight:600;font-size:15px;cursor:pointer">Novo serviço</button>
+</div>
+</header>
+
+<div role="group" aria-label="Filtros" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{ filtros }}" as="f" hint-placeholder-count="4">
+<button type="button" onClick="{{ f.pick }}" style="height:44px;padding:0 16px;border-radius:999px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.fg }};font:inherit;font-size:14px;font-weight:600;cursor:pointer">{{ f.label }}</button>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+<div style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px">
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:6px 22px 14px">
+<div style="overflow-x:auto">
+<table style="width:100%;min-width:640px;border-collapse:collapse;font-size:15px">
+<thead><tr style="text-align:left;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5A5D5E">
+<th style="padding:14px 10px 10px;font-weight:600;padding-left:0">Serviço</th>
+<th style="padding:14px 10px 10px;font-weight:600">Cobrança</th>
+<th style="padding:14px 10px 10px;font-weight:600;text-align:right">Valor</th>
+<th style="padding:14px 10px 10px;font-weight:600">Duração</th>
+<th style="padding:14px 10px 10px;font-weight:600">Retorno</th>
+<th style="padding:14px 10px 10px;font-weight:600;padding-right:0">Ficha</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{ servicos }}" as="s" hint-placeholder-count="9">
+<tr style="border-top:1px solid #EEE8E0;background:{{ s.bg }}">
+<td style="padding:12px 10px;padding-left:8px"><a href="#" style="font-weight:600;text-decoration:none">{{ s.nome }}</a><br><span style="font-size:13px;color:#5A5D5E">{{ s.cat }}</span></td>
+<td style="padding:12px 10px;white-space:nowrap">{{ s.un }}</td>
+<td style="padding:12px 10px;text-align:right;font-weight:600;white-space:nowrap">{{ s.valor }}</td>
+<td style="padding:12px 10px;white-space:nowrap">{{ s.dur }}</td>
+<td style="padding:12px 10px;white-space:nowrap">{{ s.ret }}</td>
+<td style="padding:12px 10px;padding-right:8px">{{ s.ficha }}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:18px 22px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+<h2 style="margin:0;font-size:16px;font-weight:700">Deslocamento por região</h2>
+<a href="#" style="font-size:14px;font-weight:600">Editar tabela</a>
+</div>
+<div style="font-size:14px;color:#5A5D5E">Entra sozinho na proposta conforme a região do local do animal.</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:10px">
+<sc-for list="{{ regioes }}" as="r" hint-placeholder-count="5">
+<div style="background:#F6F2EC;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:2px">
+<span style="font-size:13px;color:#5A5D5E">{{ r.nome }}</span><span style="font-size:15px;font-weight:600">{{ r.valor }}</span>
+</div>
+</sc-for>
+</div>
+</section>
+</div>
+
+<aside aria-label="Editar serviço" style="flex:1 1 320px;min-width:0;background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Editar serviço</h2>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Nome
+<input type="text" value="Quiropraxia" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627">
+</label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Categoria
+<select style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627"><option>Fisioterapia e Reabilitação</option><option>Clínica Ortopédica</option><option>Clínica Cirúrgica</option><option>Diagnóstico por Imagem</option><option>Odontologia Equina</option><option>Terapias Ortobiológicas</option><option>Nutrição e Endocrinologia</option></select>
+</label>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Cobrança
+<select style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627"><option>Por sessão</option><option>Por animal</option><option>Por projeção</option><option>Por hora</option></select>
+</label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Valor
+<input type="text" value="R$ 450,00" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627">
+</label>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Duração média
+<input type="text" value="1h" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627">
+</label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Retorno sugerido
+<select style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627"><option>60 dias</option><option>30 dias</option><option>90 dias</option><option>Anual</option><option>Sem retorno</option></select>
+</label>
+</div>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Ficha de atendimento
+<select style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627"><option>Quiropraxia</option><option>Geral</option><option>Ortopédico</option><option>Fisioterapia</option><option>Odontologia</option><option>Controle sanitário</option><option>Exame clínico</option><option>Dermatologia</option><option>Reprodução</option><option>Neurológico</option><option>Nutrição</option></select>
+</label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Quem realiza
+<select style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627"><option>Fabi</option><option>Bruno</option><option>Fabi ou Bruno</option></select>
+</label>
+<label style="display:flex;align-items:center;gap:12px;min-height:44px;font-size:15px;cursor:pointer">
+<input type="checkbox" checked="{{ yes }}" onChange="{{ noop }}" style="width:20px;height:20px;accent-color:#7B2234">
+Ativo no catálogo
+</label>
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;border:0;background:#7B2234;color:#FFFFFF;text-decoration:none;font:inherit;font-weight:600;font-size:15px;cursor:pointer">Salvar</button>
+<div style="font-size:13px;line-height:1.4;color:#5A5D5E">A duração monta a rota, o retorno gera o aviso e a ficha abre sozinha no atendimento.</div>
+</aside>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+const pills = (key, opts) => { const sel = (this.state && this.state[key]) || opts[0]; return opts.map((label) => ({ label, bg: label === sel ? '#2B2627' : '#FFFFFF', fg: label === sel ? '#FFFFFF' : '#2B2627', bd: label === sel ? '#2B2627' : '#CFC8BF', pick: () => this.setState({ [key]: label }) })); };
+const tone = { ok: ['#E4EFE4', '#2A5434'], warn: ['#FBF0D9', '#6E4700'], bad: ['#F3E7E9', '#7B2234'], info: ['#E3EDF7', '#1F4E79'], mute: ['#EEEAE4', '#4A4546'] };
+const s = (nome, cat, un, valor, dur, ret, ficha, selc) => ({ nome, cat, un, valor, dur, ret, ficha, bg: selc ? '#F6F2EC' : 'transparent' });
+return { noop: () => {}, yes: true,
+filtros: pills('c', ['Todas', 'Fisioterapia', 'Ortopedia', 'Cirurgia', 'Imagem', 'Odontologia', 'Ortobiológicos', 'Nutrição']),
+servicos: [
+s('Quiropraxia', 'Fisioterapia e Reabilitação', 'por sessão', 'R$ 450,00', '1h', '60 dias', 'Quiropraxia', true),
+s('ShockWave', 'Fisioterapia e Reabilitação', 'por sessão', 'R$ 600,00', '45 min', 'conforme protocolo', 'Fisioterapia', false),
+s('Avaliação ortopédica', 'Clínica Ortopédica', 'por animal', 'R$ 380,00', '1h', '30 dias', 'Ortopédico', false),
+s('Raio-X digital', 'Diagnóstico por Imagem', 'por projeção', 'R$ 90,00', '15 min', 'sem retorno', 'Geral', false),
+s('Ultrassom de tendões e ligamentos', 'Diagnóstico por Imagem', 'por animal', 'R$ 420,00', '45 min', 'sem retorno', 'Geral', false),
+s('Odontologia', 'Odontologia Equina', 'por animal', 'R$ 600,00', '1h30', 'anual', 'Odontologia', false),
+s('PRP', 'Terapias Ortobiológicas', 'por aplicação', 'R$ 1.250,00', '1h30', '30 dias', 'Ortopédico', false),
+s('Controle sanitário', 'Clínica geral', 'por animal', 'R$ 240,00', '20 min', 'semestral', 'Controle sanitário', false)
+],
+regioes: [
+{ nome: 'Litoral Norte', valor: '[VALOR]' }, { nome: 'Vale do Itajaí', valor: '[VALOR]' }, { nome: 'Grande Florianópolis', valor: '[VALOR]' }, { nome: 'Sul', valor: '[VALOR]' }, { nome: 'Planalto Serrano', valor: '[VALOR]' }
+] };
+}
+}
+</script>
+</body>
+</html>

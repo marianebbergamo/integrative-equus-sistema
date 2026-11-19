@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Menu lateral</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<nav aria-label="Menu principal" style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#FFFFFF;background:#7B2234;box-sizing:border-box;padding:24px 14px;display:flex;flex-direction:column;gap:22px">
+<a href="Main.dc.html" style="display:flex;align-items:center;gap:10px;padding:0 8px;text-decoration:none;color:#FFFFFF">
+<img src="assets/simbolo-branco.png" alt="" style="height:40px;width:auto">
+<span style="display:flex;flex-direction:column;gap:2px">
+<span style="font-family:'Spectral',Georgia,serif;font-size:19px;line-height:1">Integrative Equus</span>
+<span style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#D9DBDD">Medicina equina</span>
+</span>
+</a>
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+<div style="display:flex;flex-direction:column;gap:2px">
+<sc-if value="{{ g.label }}" hint-placeholder-val="{{ true }}">
+<div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#D9DBDD;padding:0 10px 6px">{{ g.label }}</div>
+</sc-if>
+<sc-for list="{{ g.items }}" as="item" hint-placeholder-count="3">
+<a href="{{ item.href }}" style="display:flex;align-items:center;gap:12px;min-height:40px;padding:0 10px;border-radius:8px;text-decoration:none;color:#FFFFFF;font-size:15px;background:{{ item.bg }};font-weight:{{ item.fw }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ item.d }}"></path></svg>
+<span>{{ item.label }}</span>
+</a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["inicio","fluxo","agenda","clientes","animais","haras","propostas","fichas","financeiro","nf","servicos","produtos","estoque"],"default":"inicio"},"$preview":{"width":248,"height":780}}'>
+class Component extends DCLogic {
+renderVals() {
+const active = this.props.active ?? 'inicio';
+const raw = [
+{ label: '', items: [
+['inicio', 'Início', 'Main.dc.html', 'M4 11l8-7 8 7v9h-5v-6H9v6H4z'],
+['fluxo', 'Fluxo', 'Fluxo.dc.html', 'M4 5h4v14H4zM10 5h4v9h-4zM16 5h4v6h-4z'],
+['agenda', 'Agenda e rotas', 'Agenda.dc.html', 'M5 6h14v14H5zM5 10h14M9 3v4M15 3v4']
+] },
+{ label: 'Cadastros', items: [
+['clientes', 'Clientes', 'Clientes.dc.html', 'M12 12a4 4 0 100-8 4 4 0 000 8zM4 20c1-4 4-5 8-5s7 1 8 5'],
+['animais', 'Animais', 'Animal.dc.html', 'M4 7h16v12H4zM8 12h4M8 15h8'],
+['haras', 'Haras e locais', 'Haras.dc.html', 'M12 21s-6-6-6-11a6 6 0 0112 0c0 5-6 11-6 11zM12 12a2 2 0 100-4 2 2 0 000 4z']
+] },
+{ label: 'Atendimento', items: [
+['propostas', 'Propostas', 'Proposta.dc.html', 'M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5'],
+['fichas', 'Fichas e fechamento', 'Fechamento.dc.html', 'M8 5h8v3H8zM6 6H5v15h14V6h-1M9 13h6M9 17h6']
+] },
+{ label: 'Financeiro', items: [
+['financeiro', 'Cobranças', 'Financeiro.dc.html', 'M4 7h16v11H4zM4 11h16M8 15h3'],
+['nf', 'Notas fiscais', '#', 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6']
+] },
+{ label: 'Catálogo', items: [
+['servicos', 'Serviços e valores', 'Servicos.dc.html', 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 8v8M8 12h8'],
+['produtos', 'Produtos', 'Produtos.dc.html', 'M4 8l8-4 8 4v9l-8 4-8-4zM4 8l8 4 8-4M12 12v9'],
+['estoque', 'Estoque', 'Estoque.dc.html', 'M4 7l8-4 8 4-8 4zM4 12l8 4 8-4M4 17l8 4 8-4']
+] }
+];
+const groups = raw.map((g) => ({
+label: g.label,
+items: g.items.map((i) => ({
+label: i[1], href: i[2], d: i[3],
+bg: i[0] === active ? 'rgba(255,255,255,0.16)' : 'transparent',
+fw: i[0] === active ? 600 : 400
+}))
+}));
+return { groups };
+}
+}
+</script>
+</body>
+</html>

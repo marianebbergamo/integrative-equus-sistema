@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Início</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;min-height:100vh;display:flex;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 248px;max-width:100%;background:#7B2234">
+<dc-import name="Sidebar" active="inicio" hint-size="248px,780px"></dc-import>
+</div>
+<main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:32px 40px 48px;display:flex;flex-direction:column;gap:28px">
+
+<header style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7B2234;font-weight:600">Quinta-feira, 19 de novembro</div>
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:36px;line-height:1.1">Bom dia, Fabi.</h1>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<input type="search" aria-label="Buscar" placeholder="Buscar cliente, animal ou haras" style="box-sizing:border-box;width:300px;max-width:100%;height:44px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;color:#2B2627">
+<a href="Fluxo.dc.html" style="display:inline-flex;align-items:center;height:44px;padding:0 18px;border-radius:8px;background:#7B2234;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:15px">Novo pedido de orçamento</a>
+</div>
+</header>
+
+<section aria-label="Pendências" style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">O que precisa de você</h2>
+<a href="Fluxo.dc.html" style="font-size:14px;font-weight:600">Ver o fluxo completo</a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(165px,100%),1fr));gap:14px">
+<sc-for list="{{ alerts }}" as="a" hint-placeholder-count="6">
+<a href="{{ a.href }}" style="text-decoration:none;color:#2B2627;background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+<span style="font-family:'Spectral',Georgia,serif;font-size:40px;line-height:1;color:{{ a.color }}">{{ a.n }}</span>
+<span style="font-size:15px;font-weight:600;margin-top:6px">{{ a.label }}</span>
+<span style="font-size:13px;line-height:1.4;color:#5A5D5E">{{ a.hint }}</span>
+</a>
+</sc-for>
+</div>
+</section>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:20px;align-items:start">
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+<div style="display:flex;flex-direction:column;gap:4px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Rota de hoje · Litoral Norte</h2>
+<div style="font-size:14px;color:#5A5D5E">4 paradas · 96 km previstos · saída às 7h30</div>
+</div>
+<a href="Agenda.dc.html" style="font-size:14px;font-weight:600">Abrir agenda</a>
+</div>
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{ stops }}" as="s" hint-placeholder-count="4">
+<li style="display:flex;gap:16px;padding:14px 0;border-top:1px solid #EEE8E0;align-items:flex-start">
+<div style="width:52px;flex:none;font-family:'Spectral',Georgia,serif;font-size:20px;color:#7B2234">{{ s.hora }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+<div style="font-size:15px;font-weight:600">{{ s.local }} <span style="font-weight:400;color:#5A5D5E">· {{ s.cidade }}</span></div>
+<div style="font-size:14px;color:#4A4546">{{ s.animal }} · {{ s.servico }}</div>
+</div>
+<span style="flex:none;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#EEEAE4;color:#4A4546">{{ s.vet }}</span>
+</li>
+</sc-for>
+</ol>
+<a href="Fechamento.dc.html" style="align-self:flex-start;display:inline-flex;align-items:center;height:44px;padding:0 16px;border-radius:8px;border:1px solid #7B2234;color:#7B2234;text-decoration:none;font-weight:600;font-size:15px">Registrar atendimento</a>
+</section>
+
+<div style="display:flex;flex-direction:column;gap:20px">
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Financeiro de novembro</h2>
+<a href="Financeiro.dc.html" style="font-size:14px;font-weight:600">Ver cobranças</a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Recebido</span><span style="font-family:'Spectral',Georgia,serif;font-size:24px;color:#2A5434">R$ 21.650</span></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">A receber</span><span style="font-family:'Spectral',Georgia,serif;font-size:24px">R$ 7.535</span></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Em atraso</span><span style="font-family:'Spectral',Georgia,serif;font-size:24px;color:#7B2234">R$ 1.850</span></div>
+</div>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Estoque abaixo do mínimo</h2>
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{ stock }}" as="p" hint-placeholder-count="3">
+<li style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #EEE8E0;font-size:14px">
+<span style="font-weight:600">{{ p.nome }}</span>
+<span style="color:#7B2234;font-weight:600">{{ p.qtd }} <span style="color:#5A5D5E;font-weight:400">· mín. {{ p.min }}</span></span>
+</li>
+</sc-for>
+</ul>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Retornos a vencer</h2>
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{ returns }}" as="r" hint-placeholder-count="3">
+<li style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #EEE8E0;font-size:14px">
+<span><span style="font-weight:600">{{ r.animal }}</span> · {{ r.servico }}<br><span style="color:#5A5D5E">{{ r.cliente }}</span></span>
+<span style="flex:none;color:#6E4700;font-weight:600">{{ r.prazo }}</span>
+</li>
+</sc-for>
+</ul>
+</section>
+
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+alerts: [
+{ n: 2, label: 'Orçamentos a fazer', hint: 'Pedidos ainda sem proposta', href: 'Fluxo.dc.html', color: '#2B2627' },
+{ n: 4, label: 'Aguardando aprovação', hint: '1 proposta há mais de 7 dias', href: 'Fluxo.dc.html', color: '#2B2627' },
+{ n: 6, label: 'A agendar', hint: '3 em Lages, 2 em Tubarão', href: 'Agenda.dc.html', color: '#2B2627' },
+{ n: 1, label: 'Atendimento sem ficha', hint: 'De ontem, em Itajaí', href: 'Fechamento.dc.html', color: '#7B2234' },
+{ n: 3, label: 'A cobrar', hint: 'Enviados ao financeiro', href: 'Financeiro.dc.html', color: '#2B2627' },
+{ n: 2, label: 'Pagamentos em atraso', hint: 'R$ 1.850 no total', href: 'Financeiro.dc.html', color: '#7B2234' }
+],
+stops: [
+{ hora: '8h00', local: 'Haras Santa Clara', cidade: 'Camboriú', animal: 'Trovador', servico: 'Quiropraxia', vet: 'Fabi' },
+{ hora: '10h00', local: 'CT Dois Irmãos', cidade: 'Itajaí', animal: 'Lua Cheia', servico: 'Raio-X digital e ultrassom', vet: 'Bruno' },
+{ hora: '13h30', local: 'Marcelo Pires', cidade: 'Navegantes', animal: 'Faísca', servico: 'Odontologia', vet: 'Fabi' },
+{ hora: '15h30', local: 'Haras Bela Vista', cidade: 'Penha', animal: '2 animais', servico: 'Avaliação ortopédica', vet: 'Bruno' }
+],
+stock: [
+{ nome: 'Sedativo 10 ml', qtd: '2 frascos', min: 4 },
+{ nome: 'Agulha 40x12', qtd: '1 caixa', min: 3 },
+{ nome: 'Bandagem elástica', qtd: '5 unidades', min: 10 }
+],
+returns: [
+{ animal: 'Trovador', servico: 'Quiropraxia', cliente: 'Haras Santa Clara', prazo: 'em 5 dias' },
+{ animal: 'Estrela', servico: 'Reavaliação ortopédica', cliente: 'Ana Luiza Koerich', prazo: 'em 9 dias' },
+{ animal: 'Faísca', servico: 'Odontologia anual', cliente: 'Marcelo Pires', prazo: 'em 12 dias' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

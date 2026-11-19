@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Cadastro do cliente · animal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="width:390px;height:1280px;box-sizing:border-box;font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;display:flex;flex-direction:column">
+<div style="background:#7B2234;color:#FFFFFF;padding:20px;display:flex;align-items:center;gap:12px">
+<img src="assets/simbolo-branco.png" alt="" style="height:44px;width:auto">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-family:'Spectral',Georgia,serif;font-size:21px;line-height:1">Integrative Equus</div>
+<div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#D9DBDD">Medicina equina</div>
+</div>
+</div>
+
+<form style="flex:1;padding:22px 20px 24px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px" aria-hidden="true">
+<div style="height:6px;border-radius:999px;background:#7B2234"></div>
+<div style="height:6px;border-radius:999px;background:#7B2234"></div>
+<div style="height:6px;border-radius:999px;background:#DDD6CC"></div>
+</div>
+<div style="font-size:13px;color:#5A5D5E">Etapa 2 de 3</div>
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:28px;line-height:1.15">Seu animal</h1>
+</div>
+
+<div role="group" aria-label="Como cadastrar" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;background:#E8E1D7;border-radius:10px;padding:4px">
+<button type="button" style="min-height:44px;border-radius:8px;border:0;background:#FFFFFF;color:#2B2627;font:inherit;font-size:15px;font-weight:700;cursor:pointer">Enviar o registro</button>
+<button type="button" style="min-height:44px;border-radius:8px;border:0;background:transparent;color:#4A4546;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Preencher à mão</button>
+</div>
+
+<div style="border:1px dashed #7B2234;border-radius:10px;background:#FFFFFF;padding:16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+<div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+<div style="font-size:15px;font-weight:600">registro-faisca.pdf</div>
+<div style="font-size:13px;color:#2A5434">Registro lido. Confira os dados abaixo.</div>
+</div>
+<button type="button" style="flex:none;min-height:44px;padding:0 12px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Trocar</button>
+</div>
+<div style="font-size:13px;line-height:1.4;color:#5A5D5E">Aceita foto ou PDF do registro da ABQM, ABCCC ou de outra associação.</div>
+</div>
+
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Nome do animal
+<input type="text" value="Faísca" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627">
+</label>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Raça
+<input type="text" value="Quarto de Milha" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627">
+</label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Sexo
+<select style="box-sizing:border-box;width:100%;height:48px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627"><option>Égua</option><option>Garanhão</option><option>Castrado</option></select>
+</label>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Nascimento
+<input type="text" value="14/09/2018" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627">
+</label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Pelagem
+<input type="text" value="Alazã" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627">
+</label>
+</div>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Número do registro
+<input type="text" value="[Nº DO REGISTRO]" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627">
+</label>
+
+<fieldset style="margin:0;border:0;border-top:1px solid #E4DDD3;padding:16px 0 0;display:flex;flex-direction:column;gap:10px">
+<legend style="padding:0;font-size:16px;font-weight:700">Onde a Faísca fica?</legend>
+<label style="display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font-size:15px;cursor:pointer">
+<input type="radio" name="local" checked="{{ no }}" onChange="{{ noop }}" style="width:20px;height:20px;accent-color:#7B2234">
+No meu endereço
+</label>
+<label style="display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px;border:1px solid #7B2234;border-radius:8px;background:#FFFFFF;font-size:15px;font-weight:600;cursor:pointer">
+<input type="radio" name="local" checked="{{ yes }}" onChange="{{ noop }}" style="width:20px;height:20px;accent-color:#7B2234">
+Em um haras, fazenda ou CT
+</label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Qual?
+<input type="search" value="Haras Santa Clara · Camboriú" onChange="{{ noop }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627">
+</label>
+<a href="#" style="font-size:14px;font-weight:600">Não achei o local. Cadastrar novo endereço</a>
+</fieldset>
+
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+<button type="button" style="min-height:48px;border-radius:8px;border:1px solid #7B2234;background:#FFFFFF;color:#7B2234;font:inherit;font-size:16px;font-weight:600;cursor:pointer">Adicionar outro animal</button>
+<a href="#" style="display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:8px;background:#7B2234;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:17px">Conferir e enviar</a>
+</div>
+</form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1280}}'>
+class Component extends DCLogic {
+renderVals() {
+return { noop: () => {}, yes: true, no: false };
+}
+}
+</script>
+</body>
+</html>

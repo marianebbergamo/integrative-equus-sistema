@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Fluxo de atendimentos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;min-height:100vh;display:flex;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 248px;max-width:100%;background:#7B2234">
+<dc-import name="Sidebar" active="fluxo" hint-size="248px,780px"></dc-import>
+</div>
+<main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:32px 40px 48px;display:flex;flex-direction:column;gap:22px">
+
+<header style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:36px;line-height:1.1">Fluxo</h1>
+<div style="font-size:15px;color:#5A5D5E;max-width:620px">Cada atendimento é um cartão que anda da esquerda para a direita. Nada sai de uma etapa sem a ação dela.</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+<div role="group" aria-label="Filtrar por veterinário" style="display:flex;gap:6px">
+<sc-for list="{{ filtros }}" as="f" hint-placeholder-count="3">
+<button type="button" onClick="{{ f.pick }}" style="height:44px;padding:0 16px;border-radius:999px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.fg }};font:inherit;font-size:14px;font-weight:600;cursor:pointer">{{ f.label }}</button>
+</sc-for>
+</div>
+<button type="button" style="height:44px;padding:0 18px;border-radius:8px;border:0;background:#7B2234;color:#FFFFFF;font:inherit;font-weight:600;font-size:15px;cursor:pointer">Novo pedido de orçamento</button>
+</div>
+</header>
+
+<sc-for list="{{ fases }}" as="fase" hint-placeholder-count="2">
+<section style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+<h2 style="margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7B2234;font-weight:700">{{ fase.nome }}</h2>
+<span style="font-size:13px;color:#5A5D5E">{{ fase.quem }}</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:14px;align-items:start">
+<sc-for list="{{ fase.cols }}" as="col" hint-placeholder-count="4">
+<div style="background:#EFE9E1;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 4px">
+<div style="font-size:15px;font-weight:700">{{ col.n }}. {{ col.nome }}</div>
+<span style="font-size:13px;font-weight:700;min-width:26px;text-align:center;padding:2px 8px;border-radius:999px;background:#FFFFFF;color:#2B2627">{{ col.total }}</span>
+</div>
+<sc-for list="{{ col.cards }}" as="c" hint-placeholder-count="2">
+<article style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start">
+<div style="font-size:15px;font-weight:600;line-height:1.25">{{ c.cliente }}</div>
+<div style="flex:none;font-size:14px;font-weight:600">{{ c.valor }}</div>
+</div>
+<div style="font-size:13px;line-height:1.4;color:#4A4546">{{ c.animal }} · {{ c.servico }}</div>
+<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap">
+<span style="font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#E3EDF7;color:#1F4E79">{{ c.cidade }}</span>
+<span style="font-size:12px;font-weight:600;color:{{ c.tempoCor }}">{{ c.tempo }}</span>
+</div>
+<a href="{{ col.href }}" style="display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:8px;border:1px solid #7B2234;color:#7B2234;text-decoration:none;font-size:14px;font-weight:600">{{ col.acao }}</a>
+</article>
+</sc-for>
+<sc-if value="{{ col.mais }}" hint-placeholder-val="{{ true }}">
+<a href="#" style="font-size:13px;font-weight:600;padding:4px">{{ col.mais }}</a>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-for>
+
+<div style="font-size:13px;color:#5A5D5E">Atendimento direto (emergência ou cliente de confiança) entra já na etapa 5, sem proposta.</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+const sel = (this.state && this.state.vet) || 'Todos';
+const filtros = ['Todos', 'Fabi', 'Bruno'].map((label) => ({
+label,
+bg: label === sel ? '#2B2627' : '#FFFFFF',
+fg: label === sel ? '#FFFFFF' : '#2B2627',
+bd: label === sel ? '#2B2627' : '#CFC8BF',
+pick: () => this.setState({ vet: label })
+}));
+const card = (cliente, animal, servico, cidade, tempo, valor, atrasado) => ({
+cliente, animal, servico, cidade, tempo, valor, tempoCor: atrasado ? '#7B2234' : '#5A5D5E'
+});
+const fases = [
+{ nome: 'Comercial e agenda', quem: 'Fabi e Bruno', cols: [
+{ n: 1, nome: 'Orçamento a fazer', total: 2, acao: 'Montar proposta', href: '#', mais: '', cards: [
+card('Ana Luiza Koerich', 'Estrela', 'Avaliação ortopédica', 'Florianópolis', 'pedido hoje', 'a definir', false),
+card('CT Rancho Alegre', '3 animais', 'Odontologia', 'Lages', 'há 2 dias', 'a definir', true)
+] },
+{ n: 2, nome: 'Aguardando aprovação', total: 4, acao: 'Registrar resposta', href: '#', mais: 'Ver mais 2', cards: [
+card('Haras Bela Vista', 'Imperador', 'ShockWave, 3 sessões', 'Penha', 'enviada há 8 dias', 'R$ 1.800', true),
+card('João Batista Nunes', 'Morena', 'Quiropraxia', 'Tubarão', 'enviada ontem', 'R$ 450', false)
+] },
+{ n: 3, nome: 'A agendar', total: 6, acao: 'Agendar', href: 'Agenda.dc.html', mais: 'Ver mais 4', cards: [
+card('CT Serra Azul', '2 animais', 'Raio-X digital', 'Lages', 'aprovada há 4 dias', 'R$ 1.200', false),
+card('Paula Menegotto', 'Capitão', 'Fisioterapia', 'Tubarão', 'aprovada há 1 dia', 'R$ 380', false)
+] },
+{ n: 4, nome: 'Agendado', total: 7, acao: 'Ver na agenda', href: 'Agenda.dc.html', mais: 'Ver mais 5', cards: [
+card('Haras Santa Clara', 'Trovador', 'Quiropraxia', 'Camboriú', 'hoje, 8h00', 'R$ 450', false),
+card('Marcelo Pires', 'Faísca', 'Odontologia', 'Navegantes', 'hoje, 13h30', 'R$ 600', false)
+] }
+] },
+{ nome: 'Atendimento e financeiro', quem: 'Veterinário fecha, financeiro cobra', cols: [
+{ n: 5, nome: 'Registrar atendimento', total: 1, acao: 'Preencher ficha e fechar', href: 'Fechamento.dc.html', mais: '', cards: [
+card('CT Dois Irmãos', 'Pérola', 'Ultrassom', 'Itajaí', 'atendido ontem', 'R$ 520', true)
+] },
+{ n: 6, nome: 'A cobrar', total: 3, acao: 'Enviar cobrança', href: 'Financeiro.dc.html', mais: 'Ver mais 1', cards: [
+card('Ricardo Schmitz', 'Guapo', 'Odontologia e sedação', 'Blumenau', 'fechado há 1 dia', 'R$ 720', false),
+card('Haras Três Barras', '4 animais', 'Controle sanitário', 'Joinville', 'fechado hoje', 'R$ 960', false)
+] },
+{ n: 7, nome: 'Aguardando pagamento', total: 5, acao: 'Confirmar recebimento', href: 'Financeiro.dc.html', mais: 'Ver mais 3', cards: [
+card('Fernanda Lopes', 'Aurora', 'PRP', 'Itapema', 'venceu há 6 dias', 'R$ 1.250', true),
+card('CT Vale Verde', 'Zorro', 'Quiropraxia', 'Brusque', 'vence em 3 dias', 'R$ 450', false)
+] },
+{ n: 8, nome: 'Emitir nota fiscal', total: 2, acao: 'Emitir NF', href: 'Financeiro.dc.html', mais: '', cards: [
+card('Carlos Eduardo Voss', 'Bandido', 'Raio-X digital', 'Criciúma', 'pago ontem', 'R$ 600', false),
+card('Haras Santa Clara', 'Trovador', 'Quiropraxia', 'Camboriú', 'pago há 2 dias', 'R$ 450', false)
+] }
+] }
+];
+return { filtros, fases };
+}
+}
+</script>
+</body>
+</html>

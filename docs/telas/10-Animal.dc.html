@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Animal e prontuário</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;min-height:100vh;display:flex;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 248px;max-width:100%;background:#7B2234">
+<dc-import name="Sidebar" active="animais" hint-size="248px,780px"></dc-import>
+</div>
+<main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:32px 40px 48px;display:flex;flex-direction:column;gap:22px">
+
+<header style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:14px"><a href="#" style="font-weight:600">Animais</a> <span style="color:#5A5D5E">› Faísca</span></div>
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:36px;line-height:1.1">Faísca</h1>
+<div style="font-size:15px;color:#5A5D5E">Quarto de Milha · égua · alazã · 8 anos · registro [Nº DO REGISTRO]</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;color:#2B2627;text-decoration:none;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer">Editar dados</button>
+<a href="Proposta.dc.html" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;border:0;background:#7B2234;color:#FFFFFF;text-decoration:none;font:inherit;font-weight:600;font-size:15px;cursor:pointer">Nova proposta</a>
+</div>
+</header>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+
+<section style="flex:999 1 520px;min-width:0;background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Prontuário</h2>
+<div style="font-size:14px;color:#5A5D5E">Todas as fichas de atendimento, da mais recente para a mais antiga</div>
+</div>
+<div role="group" aria-label="Filtros" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{ filtros }}" as="f" hint-placeholder-count="4">
+<button type="button" onClick="{{ f.pick }}" style="height:44px;padding:0 16px;border-radius:999px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.fg }};font:inherit;font-size:14px;font-weight:600;cursor:pointer">{{ f.label }}</button>
+</sc-for>
+</div>
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{ fichas }}" as="f" hint-placeholder-count="5">
+<li style="display:flex;gap:16px;padding:16px 0;border-top:1px solid #EEE8E0;align-items:flex-start">
+<div style="flex:none;width:92px;display:flex;flex-direction:column;gap:2px">
+<div style="font-family:'Spectral',Georgia,serif;font-size:20px;color:#7B2234">{{ f.dia }}</div>
+<div style="font-size:13px;color:#5A5D5E">{{ f.ano }}</div>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="font-size:15px;font-weight:600">{{ f.tipo }} <span style="font-weight:400;color:#5A5D5E">· {{ f.vet }} · {{ f.local }}</span></div>
+<div style="font-size:14px;color:#4A4546">{{ f.anexos }}</div>
+</div>
+<a href="Ficha.dc.html" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;color:#2B2627;text-decoration:none;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer">Abrir ficha</a>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px">
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font-size:16px;font-weight:700">Proprietário e local</h2>
+<dl style="margin:0;display:flex;flex-direction:column;gap:10px;font-size:15px">
+<div style="display:flex;flex-direction:column;gap:2px"><dt style="font-size:13px;color:#5A5D5E">Proprietário</dt><dd style="margin:0"><a href="Clientes.dc.html" style="font-weight:600">Marcelo Pires</a> · Navegantes</dd></div>
+<div style="display:flex;flex-direction:column;gap:2px"><dt style="font-size:13px;color:#5A5D5E">Onde o animal fica</dt><dd style="margin:0"><a href="Haras.dc.html" style="font-weight:600">Haras Santa Clara</a> · Camboriú</dd></div>
+<div style="display:flex;flex-direction:column;gap:2px"><dt style="font-size:13px;color:#5A5D5E">Região de rota</dt><dd style="margin:0">Litoral Norte</dd></div>
+</dl>
+<div style="font-size:13px;line-height:1.4;color:#1F4E79;background:#E3EDF7;border-radius:8px;padding:8px 12px">A agenda usa o endereço do haras, não o do proprietário.</div>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px">
+<h2 style="margin:0;font-size:16px;font-weight:700">Retornos</h2>
+<sc-for list="{{ retornos }}" as="r" hint-placeholder-count="2">
+<div style="display:flex;justify-content:space-between;gap:12px;border-top:1px solid #EEE8E0;padding-top:10px;font-size:14px">
+<span>{{ r.servico }}</span><span style="flex:none;font-weight:600;color:{{ r.cor }}">{{ r.prazo }}</span>
+</div>
+</sc-for>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px">
+<h2 style="margin:0;font-size:16px;font-weight:700">Em andamento</h2>
+<div style="display:flex;flex-direction:column;gap:4px;border-top:1px solid #EEE8E0;padding-top:10px">
+<div style="font-size:15px;font-weight:600">Odontologia · R$ 600</div>
+<div style="font-size:14px;color:#5A5D5E">Etapa 4, agendado para hoje, 13h30</div>
+<a href="Fluxo.dc.html" style="font-size:14px;font-weight:600">Ver no fluxo</a>
+</div>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:10px">
+<h2 style="margin:0;font-size:16px;font-weight:700">Documentos</h2>
+<div style="font-size:14px;border-top:1px solid #EEE8E0;padding-top:10px">registro-faisca.pdf <span style="color:#5A5D5E">· enviado pelo cliente no cadastro</span></div>
+<button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;color:#2B2627;text-decoration:none;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer;align-self:flex-start">Anexar exame ou laudo</button>
+</section>
+
+</div>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+const pills = (key, opts) => { const sel = (this.state && this.state[key]) || opts[0]; return opts.map((label) => ({ label, bg: label === sel ? '#2B2627' : '#FFFFFF', fg: label === sel ? '#FFFFFF' : '#2B2627', bd: label === sel ? '#2B2627' : '#CFC8BF', pick: () => this.setState({ [key]: label }) })); };
+const tone = { ok: ['#E4EFE4', '#2A5434'], warn: ['#FBF0D9', '#6E4700'], bad: ['#F3E7E9', '#7B2234'], info: ['#E3EDF7', '#1F4E79'], mute: ['#EEEAE4', '#4A4546'] };
+const f = (dia, ano, tipo, vet, local, anexos) => ({ dia, ano, tipo, vet, local, anexos });
+return { filtros: pills('t', ['Todas', 'Odontologia', 'Quiropraxia', 'Ortopédico', 'Imagem']),
+fichas: [
+f('12 out', '2026', 'Quiropraxia', 'Fabi', 'Haras Santa Clara', 'Ficha completa · 2 fotos · retorno sugerido em 60 dias'),
+f('3 ago', '2026', 'Clínica ortopédica', 'Bruno', 'Haras Santa Clara', 'Ficha completa · laudo em PDF'),
+f('3 ago', '2026', 'Diagnóstico por imagem', 'Bruno', 'Haras Santa Clara', 'Ficha completa · 8 imagens de raio-X'),
+f('1 dez', '2025', 'Odontologia', 'Fabi', 'Haras Santa Clara', 'Ficha completa · 3 fotos · retorno anual'),
+f('14 set', '2025', 'Quiropraxia', 'Fabi', 'Propriedade do cliente', 'Ficha completa')
+],
+retornos: [
+{ servico: 'Odontologia anual', prazo: 'em 12 dias', cor: '#6E4700' },
+{ servico: 'Quiropraxia', prazo: 'em 23 dias', cor: '#5A5D5E' }
+] };
+}
+}
+</script>
+</body>
+</html>

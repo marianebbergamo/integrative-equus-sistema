@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Ficha de atendimento no celular</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="width:390px;height:1400px;box-sizing:border-box;font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;display:flex;flex-direction:column">
+<div style="background:#7B2234;color:#FFFFFF;padding:18px 20px;display:flex;flex-direction:column;gap:4px">
+<div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#D9DBDD">Ficha de atendimento · hoje, 8h00</div>
+<div style="font-family:'Spectral',Georgia,serif;font-size:26px;line-height:1.1">Trovador</div>
+<div style="font-size:14px;color:#F1E6E8">Haras Santa Clara · Camboriú · Fabi</div>
+</div>
+
+<form style="flex:1;padding:18px 20px 22px;display:flex;flex-direction:column;gap:18px">
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:14px;font-weight:700">Tipo de ficha</div>
+<div role="group" aria-label="Tipo de ficha" style="display:flex;flex-wrap:wrap;gap:6px">
+<sc-for list="{{ tipos }}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{ t.pick }}" style="height:44px;padding:0 14px;border-radius:999px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};font:inherit;font-size:14px;font-weight:600;cursor:pointer">{{ t.label }}</button>
+</sc-for>
+</div>
+</div>
+
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Queixa ou motivo do atendimento
+<textarea rows="2" placeholder="Toque para escrever ou ditar" style="box-sizing:border-box;width:100%;padding:10px 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627"></textarea>
+</label>
+
+<fieldset style="margin:0;border:0;padding:0;display:flex;flex-direction:column;gap:6px">
+<legend style="padding:0;font-size:14px;font-weight:700;margin-bottom:6px">Avaliação por região</legend>
+<sc-for list="{{ regioes }}" as="r" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:#FFFFFF;border:1px solid #E4DDD3;border-radius:8px;padding:4px 4px 4px 12px">
+<span style="font-size:15px">{{ r.nome }}</span>
+<span style="display:flex;gap:4px">
+<button type="button" style="min-height:44px;padding:0 10px;border-radius:8px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid {{ r.okBd }};background:{{ r.okBg }};color:{{ r.okFg }}">Sem alteração</button>
+<button type="button" style="min-height:44px;padding:0 10px;border-radius:8px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid {{ r.altBd }};background:{{ r.altBg }};color:{{ r.altFg }}">Alteração</button>
+</span>
+</div>
+</sc-for>
+<div style="font-size:13px;color:#5A5D5E">Ao marcar Alteração, abre um campo para descrever.</div>
+</fieldset>
+
+<fieldset style="margin:0;border:0;padding:0;display:flex;flex-direction:column">
+<legend style="padding:0;font-size:14px;font-weight:700;margin-bottom:6px">Procedimentos realizados</legend>
+<sc-for list="{{ procs }}" as="p" hint-placeholder-count="2">
+<label style="display:flex;align-items:center;gap:12px;min-height:44px;font-size:15px;cursor:pointer">
+<input type="checkbox" checked="{{ p.ok }}" onChange="{{ noop }}" style="width:20px;height:20px;accent-color:#7B2234">
+<span style="flex:1">{{ p.nome }}</span>
+<span style="font-size:12px;color:#5A5D5E">{{ p.origem }}</span>
+</label>
+</sc-for>
+</fieldset>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:14px;font-weight:700">Fotos e vídeos</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+<div role="img" aria-label="Foto anexada" style="aspect-ratio:1;border-radius:8px;background:#DDD6CC;display:flex;align-items:center;justify-content:center;font-size:12px;color:#4A4546">[FOTO]</div>
+<div role="img" aria-label="Foto anexada" style="aspect-ratio:1;border-radius:8px;background:#DDD6CC;display:flex;align-items:center;justify-content:center;font-size:12px;color:#4A4546">[FOTO]</div>
+<button type="button" aria-label="Adicionar foto ou vídeo" style="aspect-ratio:1;border-radius:8px;border:1px dashed #7B2234;background:#FFFFFF;color:#7B2234;font:inherit;font-size:26px;cursor:pointer">+</button>
+</div>
+</div>
+
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Orientações ao tutor
+<textarea rows="2" placeholder="Vai para o relatório do cliente" style="box-sizing:border-box;width:100%;padding:10px 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;font-weight:400;color:#2B2627"></textarea>
+</label>
+
+<label style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600">Retorno sugerido
+<select style="box-sizing:border-box;width:100%;height:44px;padding:0 12px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;font-weight:400;color:#2B2627;height:48px;font-size:16px"><option>Em 60 dias</option><option>Em 30 dias</option><option>Em 90 dias</option><option>Sem retorno</option></select>
+</label>
+
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:8px">
+<a href="Fechamento.dc.html" style="display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:8px;background:#7B2234;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:17px">Salvar e ir para o fechamento</a>
+<div style="font-size:12px;color:#5A5D5E;text-align:center">Salva sozinha a cada campo, mesmo sem sinal.</div>
+</div>
+</form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1400}}'>
+class Component extends DCLogic {
+renderVals() {
+const sel = (this.state && this.state.tipo) || 'Quiropraxia';
+const tipos = ['Quiropraxia', 'Ortopédico', 'Fisioterapia', 'Odontologia', 'Outros 7'].map((label) => ({ label, bg: label === sel ? '#2B2627' : '#FFFFFF', fg: label === sel ? '#FFFFFF' : '#2B2627', bd: label === sel ? '#2B2627' : '#CFC8BF', pick: () => this.setState({ tipo: label }) }));
+const r = (nome, alt) => ({ nome,
+okBg: alt ? '#FFFFFF' : '#E4EFE4', okFg: alt ? '#4A4546' : '#2A5434', okBd: alt ? '#CFC8BF' : '#2A5434',
+altBg: alt ? '#F3E7E9' : '#FFFFFF', altFg: alt ? '#7B2234' : '#4A4546', altBd: alt ? '#7B2234' : '#CFC8BF' });
+return { noop: () => {}, tipos,
+regioes: [r('Cervical', false), r('Torácica', true), r('Lombar', false), r('Sacroilíaca', true), r('Membros', false)],
+procs: [
+{ nome: 'Ajuste quiroprático', origem: 'da proposta', ok: true },
+{ nome: 'Liberação miofascial', origem: 'extra', ok: false }
+] };
+}
+}
+</script>
+</body>
+</html>

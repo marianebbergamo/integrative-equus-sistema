@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --color-bordo: #7b2234;
+  --color-bordo-escuro: #5a1826;
+  --color-fundo: #f6f2ec;
+  --color-superficie: #ffffff;
+  --color-borda: #e4ddd3;
+  --color-texto: #2b2627;
+  --color-texto-secundario: #5a5d5e;
+
+  --color-situacao-em-dia-bg: #e4efe4;
+  --color-situacao-em-dia-fg: #2a5434;
+  --color-situacao-atencao-bg: #fbf0d9;
+  --color-situacao-atencao-fg: #6e4700;
+  --color-situacao-atraso-bg: #f3e7e9;
+  --color-situacao-atraso-fg: #7b2234;
+  --color-situacao-informacao-bg: #e3edf7;
+  --color-situacao-informacao-fg: #1f4e79;
+}
+
+@theme inline {
+  --color-bordo: var(--color-bordo);
+  --color-bordo-escuro: var(--color-bordo-escuro);
+  --color-fundo: var(--color-fundo);
+  --color-superficie: var(--color-superficie);
+  --color-borda: var(--color-borda);
+  --color-texto: var(--color-texto);
+  --color-texto-secundario: var(--color-texto-secundario);
+
+  --color-situacao-em-dia-bg: var(--color-situacao-em-dia-bg);
+  --color-situacao-em-dia-fg: var(--color-situacao-em-dia-fg);
+  --color-situacao-atencao-bg: var(--color-situacao-atencao-bg);
+  --color-situacao-atencao-fg: var(--color-situacao-atencao-fg);
+  --color-situacao-atraso-bg: var(--color-situacao-atraso-bg);
+  --color-situacao-atraso-fg: var(--color-situacao-atraso-fg);
+  --color-situacao-informacao-bg: var(--color-situacao-informacao-bg);
+  --color-situacao-informacao-fg: var(--color-situacao-informacao-fg);
+
+  --font-titulo: var(--font-spectral);
+  --font-sans: var(--font-hanken);
+}
+
+body {
+  background: var(--color-fundo);
+  color: var(--color-texto);
+}

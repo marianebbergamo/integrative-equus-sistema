@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Agenda e rotas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;min-height:100vh;display:flex;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 248px;max-width:100%;background:#7B2234">
+<dc-import name="Sidebar" active="agenda" hint-size="248px,780px"></dc-import>
+</div>
+<main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:32px 40px 48px;display:flex;flex-direction:column;gap:22px">
+
+<header style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:36px;line-height:1.1">Agenda e rotas</h1>
+<div style="font-size:15px;color:#5A5D5E">Semana de 23 a 28 de novembro · 12 atendimentos · 465 km previstos</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+<button type="button" aria-label="Semana anterior" style="width:44px;height:44px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;font:inherit;font-size:18px;cursor:pointer">‹</button>
+<button type="button" style="height:44px;padding:0 16px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Esta semana</button>
+<button type="button" aria-label="Próxima semana" style="width:44px;height:44px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;font:inherit;font-size:18px;cursor:pointer">›</button>
+<label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#5A5D5E">Veterinário
+<select style="height:44px;padding:0 12px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;font:inherit;font-size:14px;color:#2B2627"><option>Fabi e Bruno</option><option>Fabi</option><option>Bruno</option></select>
+</label>
+</div>
+</header>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+
+<aside aria-label="Lista de espera" style="flex:1 1 290px;min-width:0;background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:4px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Lista de espera</h2>
+<div style="font-size:14px;color:#5A5D5E">6 propostas aprovadas, agrupadas por região</div>
+</div>
+<sc-for list="{{ espera }}" as="g" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid #EEE8E0;padding-top:14px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+<div style="font-size:15px;font-weight:700">{{ g.regiao }}</div>
+<div style="font-size:13px;color:#5A5D5E">{{ g.resumo }}</div>
+</div>
+<sc-for list="{{ g.itens }}" as="i" hint-placeholder-count="2">
+<div style="background:#F6F2EC;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:2px">
+<div style="font-size:14px;font-weight:600">{{ i.cliente }}</div>
+<div style="font-size:13px;color:#4A4546">{{ i.servico }} · {{ i.tempo }}</div>
+</div>
+</sc-for>
+<div style="font-size:13px;line-height:1.4;color:#6E4700;background:#FBF0D9;border-radius:8px;padding:8px 12px">{{ g.sugestao }}</div>
+<button type="button" style="min-height:44px;border-radius:8px;border:1px solid #7B2234;background:#FFFFFF;color:#7B2234;font:inherit;font-size:14px;font-weight:600;cursor:pointer">{{ g.acao }}</button>
+</div>
+</sc-for>
+</aside>
+
+<div style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:20px">
+
+<section aria-label="Semana" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(128px,100%),1fr));gap:10px;align-items:start">
+<sc-for list="{{ dias }}" as="d" hint-placeholder-count="6">
+<div style="background:#FFFFFF;border:1px solid {{ d.bd }};border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:250px;box-sizing:border-box">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-family:'Spectral',Georgia,serif;font-size:20px;color:#7B2234">{{ d.dia }}</div>
+<div style="font-size:13px;font-weight:700">{{ d.regiao }}</div>
+<div style="font-size:12px;color:#5A5D5E">{{ d.resumo }}</div>
+</div>
+<sc-for list="{{ d.paradas }}" as="p" hint-placeholder-count="3">
+<div style="background:#F6F2EC;border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:1px">
+<div style="font-size:12px;font-weight:700;color:#7B2234">{{ p.hora }} · {{ p.vet }}</div>
+<div style="font-size:13px;font-weight:600;line-height:1.25">{{ p.cliente }}</div>
+<div style="font-size:12px;color:#5A5D5E">{{ p.cidade }}</div>
+</div>
+</sc-for>
+<sc-if value="{{ d.nota }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:12px;line-height:1.4;color:#6E4700;background:#FBF0D9;border-radius:8px;padding:8px 10px">{{ d.nota }}</div>
+</sc-if>
+</div>
+</sc-for>
+</section>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+<div style="display:flex;flex-direction:column;gap:4px">
+<h2 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:22px">Rota de terça, 24 · Vale do Itajaí</h2>
+<div style="font-size:14px;color:#5A5D5E">4 paradas · saída e retorno em [CIDADE-BASE]</div>
+</div>
+<button type="button" style="height:44px;padding:0 16px;border-radius:8px;border:1px solid #CFC8BF;background:#FFFFFF;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Abrir no Google Maps</button>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#E3EDF7;border-radius:10px;padding:14px 16px">
+<div style="font-size:15px;color:#1F4E79"><strong>A ordem sugerida economiza 43 km.</strong> Ordem atual: 214 km · sugerida: 171 km.</div>
+<button type="button" style="height:44px;padding:0 16px;border-radius:8px;border:0;background:#1F4E79;color:#FFFFFF;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Aplicar ordem sugerida</button>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:20px;align-items:stretch">
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{ rota }}" as="r" hint-placeholder-count="4">
+<li style="display:flex;gap:14px;padding:12px 0;border-top:1px solid #EEE8E0;align-items:flex-start">
+<div style="flex:none;width:28px;height:28px;border-radius:999px;background:#7B2234;color:#FFFFFF;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ r.n }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+<div style="font-size:15px;font-weight:600">{{ r.hora }} · {{ r.cliente }}</div>
+<div style="font-size:13px;color:#4A4546">{{ r.cidade }} · {{ r.servico }}</div>
+<div style="font-size:12px;color:#5A5D5E">{{ r.trecho }}</div>
+</div>
+</li>
+</sc-for>
+</ol>
+<div role="img" aria-label="Espaço do mapa da rota" style="min-height:260px;border:1px dashed #A3A7AA;border-radius:10px;background:#F6F2EC;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:14px;color:#5A5D5E">[MAPA DA ROTA]<br>paradas numeradas na ordem da visita</div>
+</div>
+</section>
+
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+const p = (hora, vet, cliente, cidade) => ({ hora, vet, cliente, cidade });
+return {
+espera: [
+{ regiao: 'Lages', resumo: '3 atendimentos', sugestao: 'Quarta, 25, está livre. Os três cabem em um dia de rota.', acao: 'Montar rota na quarta', itens: [
+{ cliente: 'CT Serra Azul', servico: 'Raio-X digital, 2 animais', tempo: '2h' },
+{ cliente: 'Sítio Boa Esperança', servico: 'Odontologia', tempo: '1h30' },
+{ cliente: 'Helena Ramos', servico: 'Quiropraxia', tempo: '1h' }
+] },
+{ regiao: 'Tubarão', resumo: '2 atendimentos', sugestao: 'Ainda não há rota para o Sul. Faltam atendimentos para fechar um dia.', acao: 'Escolher uma data', itens: [
+{ cliente: 'Paula Menegotto', servico: 'Fisioterapia', tempo: '1h' },
+{ cliente: 'Sítio Recanto', servico: 'Avaliação ortopédica', tempo: '1h30' }
+] },
+{ regiao: 'Itapema', resumo: '1 atendimento', sugestao: 'Fica no caminho da rota de sexta, 27. Acrescenta 9 km.', acao: 'Encaixar na sexta', itens: [
+{ cliente: 'Fernanda Lopes', servico: 'Reavaliação pós-PRP', tempo: '45 min' }
+] }
+],
+dias: [
+{ dia: 'Seg 23', regiao: 'Litoral Norte', resumo: '3 paradas · 88 km', bd: '#E4DDD3', nota: '', paradas: [p('8h00', 'Fabi', 'Haras Santa Clara', 'Camboriú'), p('10h30', 'Bruno', 'CT Dois Irmãos', 'Itajaí'), p('14h00', 'Fabi', 'Haras Bela Vista', 'Penha')] },
+{ dia: 'Ter 24', regiao: 'Vale do Itajaí', resumo: '4 paradas · 171 km', bd: '#7B2234', nota: '', paradas: [p('8h30', 'Bruno', 'CT Vale Verde', 'Brusque'), p('10h30', 'Fabi', 'Sítio São Pedro', 'Gaspar'), p('13h30', 'Bruno', 'Ricardo Schmitz', 'Blumenau'), p('15h30', 'Fabi', 'Haras Itoupava', 'Blumenau')] },
+{ dia: 'Qua 25', regiao: 'Dia livre', resumo: 'Sem atendimentos', bd: '#E4DDD3', nota: 'Sugestão: Lages, 3 na lista de espera.', paradas: [] },
+{ dia: 'Qui 26', regiao: 'Grande Florianópolis', resumo: '3 paradas · 142 km', bd: '#E4DDD3', nota: '', paradas: [p('9h00', 'Bruno', 'Ana Luiza Koerich', 'Florianópolis'), p('11h30', 'Fabi', 'CT Costa Sul', 'Palhoça'), p('14h30', 'Bruno', 'Haras Ilha', 'São José')] },
+{ dia: 'Sex 27', regiao: 'Litoral Norte', resumo: '2 paradas · 64 km', bd: '#E4DDD3', nota: 'Cabe 1 encaixe: Itapema.', paradas: [p('8h00', 'Fabi', 'Marcelo Pires', 'Navegantes'), p('10h30', 'Fabi', 'Haras Três Barras', 'Porto Belo')] },
+{ dia: 'Sáb 28', regiao: 'Sem rota', resumo: 'Plantão para emergências', bd: '#E4DDD3', nota: '', paradas: [] }
+],
+rota: [
+{ n: 1, hora: '8h30', cliente: 'CT Vale Verde', cidade: 'Brusque', servico: 'Quiropraxia · Bruno', trecho: '38 km desde a saída' },
+{ n: 2, hora: '10h30', cliente: 'Sítio São Pedro', cidade: 'Gaspar', servico: 'Odontologia · Fabi', trecho: '27 km do ponto anterior' },
+{ n: 3, hora: '13h30', cliente: 'Ricardo Schmitz', cidade: 'Blumenau', servico: 'Retorno de odontologia · Bruno', trecho: '18 km do ponto anterior' },
+{ n: 4, hora: '15h30', cliente: 'Haras Itoupava', cidade: 'Blumenau', servico: 'ShockWave · Fabi', trecho: '14 km do ponto anterior · 74 km de volta' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

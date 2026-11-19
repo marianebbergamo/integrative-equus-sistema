@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Financeiro · cobranças</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7B2234}a:hover{color:#5A1826}
+</style>
+</helmet>
+<div style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#2B2627;background:#F6F2EC;min-height:100vh;display:flex;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 248px;max-width:100%;background:#7B2234">
+<dc-import name="Sidebar" active="financeiro" hint-size="248px,780px"></dc-import>
+</div>
+<main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:32px 40px 48px;display:flex;flex-direction:column;gap:22px">
+
+<header style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-family:'Spectral',Georgia,serif;font-weight:400;font-size:36px;line-height:1.1">Cobranças</h1>
+<div style="font-size:15px;color:#5A5D5E">Do fechamento do veterinário até a nota fiscal emitida.</div>
+</div>
+<input type="search" aria-label="Buscar cobrança" placeholder="Buscar cliente ou animal" style="box-sizing:border-box;width:280px;max-width:100%;height:44px;padding:0 14px;border:1px solid #CFC8BF;border-radius:8px;background:#FFFFFF;font:inherit;font-size:15px;color:#2B2627">
+</header>
+
+<section aria-label="Resumo de novembro" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px">
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Recebido em novembro</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px;color:#2A5434">R$ 21.650</span></div>
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">A receber</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px">R$ 7.535</span></div>
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Em atraso · 2 clientes</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px;color:#7B2234">R$ 1.850</span></div>
+<div style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#5A5D5E">Notas fiscais a emitir</span><span style="font-family:'Spectral',Georgia,serif;font-size:30px">2</span></div>
+</section>
+
+<div role="group" aria-label="Filtrar por etapa" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{ abas }}" as="t" hint-placeholder-count="5">
+<button type="button" onClick="{{ t.pick }}" style="height:44px;padding:0 16px;border-radius:999px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};font:inherit;font-size:14px;font-weight:600;cursor:pointer">{{ t.label }} · {{ t.n }}</button>
+</sc-for>
+</div>
+
+<section style="background:#FFFFFF;border:1px solid #E4DDD3;border-radius:12px;padding:6px 22px 14px">
+<div style="overflow-x:auto">
+<table style="width:100%;min-width:860px;border-collapse:collapse;font-size:15px">
+<thead>
+<tr style="text-align:left;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5A5D5E">
+<th style="padding:14px 10px 10px 0;font-weight:600">Cliente e atendimento</th>
+<th style="padding:14px 10px 10px;font-weight:600;text-align:right">Valor</th>
+<th style="padding:14px 10px 10px;font-weight:600">Forma</th>
+<th style="padding:14px 10px 10px;font-weight:600">Vencimento</th>
+<th style="padding:14px 10px 10px;font-weight:600">Situação</th>
+<th style="padding:14px 0 10px 10px;font-weight:600">Próximo passo</th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{ linhas }}" as="l" hint-placeholder-count="8">
+<tr style="border-top:1px solid #EEE8E0">
+<td style="padding:12px 10px 12px 0"><span style="font-weight:600">{{ l.cliente }}</span><br><span style="font-size:13px;color:#5A5D5E">{{ l.desc }}</span></td>
+<td style="padding:12px 10px;text-align:right;font-weight:600;white-space:nowrap">{{ l.valor }}</td>
+<td style="padding:12px 10px;white-space:nowrap">{{ l.forma }}</td>
+<td style="padding:12px 10px;white-space:nowrap">{{ l.venc }}</td>
+<td style="padding:12px 10px"><span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;background:{{ l.pillBg }};color:{{ l.pillFg }}">{{ l.situacao }}</span></td>
+<td style="padding:8px 0 8px 10px"><button type="button" style="min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #7B2234;background:#FFFFFF;color:#7B2234;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer">{{ l.acao }}</button></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<div style="font-size:13px;color:#5A5D5E">Ao abrir uma cobrança, o financeiro vê os dados do cliente, o animal, o que estava na proposta e o que foi acrescentado no atendimento.</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+const sel = (this.state && this.state.aba) || 'todas';
+const tipos = {
+cobrar: { situacao: 'A cobrar', acao: 'Enviar cobrança', pillBg: '#EEEAE4', pillFg: '#4A4546' },
+aguardando: { situacao: 'Aguardando pagamento', acao: 'Confirmar recebimento', pillBg: '#E3EDF7', pillFg: '#1F4E79' },
+atraso: { situacao: 'Em atraso', acao: 'Cobrar no WhatsApp', pillBg: '#F3E7E9', pillFg: '#7B2234' },
+nf: { situacao: 'Pago · falta a NF', acao: 'Emitir nota fiscal', pillBg: '#FBF0D9', pillFg: '#6E4700' }
+};
+const l = (tipo, cliente, desc, valor, forma, venc) => Object.assign({ tipo, cliente, desc, valor, forma, venc }, tipos[tipo]);
+const todas = [
+l('atraso', 'Fernanda Lopes', 'Aurora · PRP · Itapema', 'R$ 1.250,00', 'Boleto', 'venceu em 13/11'),
+l('atraso', 'Sítio Recanto', 'Mel · Odontologia · Tubarão', 'R$ 600,00', 'Pix', 'venceu em 16/11'),
+l('cobrar', 'CT Dois Irmãos', 'Pérola · Ultrassom e extras · Itajaí', 'R$ 775,00', 'a combinar', 'a definir'),
+l('cobrar', 'Ricardo Schmitz', 'Guapo · Odontologia e sedação · Blumenau', 'R$ 720,00', 'a combinar', 'a definir'),
+l('cobrar', 'Haras Três Barras', '4 animais · Controle sanitário · Joinville', 'R$ 960,00', 'a combinar', 'a definir'),
+l('aguardando', 'CT Vale Verde', 'Zorro · Quiropraxia · Brusque', 'R$ 450,00', 'Pix', '22/11'),
+l('aguardando', 'Paulo Henrique Dias', 'Relâmpago · Avaliação ortopédica · Gaspar', 'R$ 980,00', 'Boleto', '25/11'),
+l('aguardando', 'Haras Itoupava', 'Sultão · ShockWave, 3 sessões · Blumenau', 'R$ 1.800,00', 'Cartão, 3x', '28/11'),
+l('nf', 'Carlos Eduardo Voss', 'Bandido · Raio-X digital · Criciúma', 'R$ 600,00', 'Pix', 'pago em 18/11'),
+l('nf', 'Haras Santa Clara', 'Trovador · Quiropraxia · Camboriú', 'R$ 450,00', 'Pix', 'pago em 17/11')
+];
+const conta = (t) => todas.filter((x) => x.tipo === t).length;
+const abas = [
+['todas', 'Tudo em aberto', todas.length],
+['cobrar', 'A cobrar', conta('cobrar')],
+['aguardando', 'Aguardando pagamento', conta('aguardando')],
+['atraso', 'Em atraso', conta('atraso')],
+['nf', 'Emitir NF', conta('nf')]
+].map((a) => ({
+label: a[1], n: a[2],
+bg: a[0] === sel ? '#2B2627' : '#FFFFFF',
+fg: a[0] === sel ? '#FFFFFF' : '#2B2627',
+bd: a[0] === sel ? '#2B2627' : '#CFC8BF',
+pick: () => this.setState({ aba: a[0] })
+}));
+const linhas = sel === 'todas' ? todas : todas.filter((x) => x.tipo === sel);
+return { abas, linhas };
+}
+}
+</script>
+</body>
+</html>
