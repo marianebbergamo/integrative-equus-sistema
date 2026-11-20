@@ -39,6 +39,7 @@ export const UNIDADES_COBRANCA_SERVICO: Record<string, string> = {
   hora: "por hora",
   projecao: "por projeção",
   aplicacao: "por aplicação",
+  quilometro: "por quilômetro",
 };
 
 export const UNIDADES_USO_PRODUTO: Record<string, string> = {
@@ -50,4 +51,6 @@ export const UNIDADES_USO_PRODUTO: Record<string, string> = {
   comprimido: "comprimido",
   caixa: "caixa",
   metro: "metro",
+  kg: "kg",
+  grama: "grama",
 };
