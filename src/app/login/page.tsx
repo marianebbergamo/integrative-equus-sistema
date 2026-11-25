@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button, TextField } from "@/components/ui";
 import { entrar } from "./actions";
 
@@ -44,6 +45,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           <Button type="submit" className="mt-1 w-full">
             Entrar
           </Button>
+          <Link
+            href="/login/esqueci"
+            className="text-center text-sm text-bordo hover:underline"
+          >
+            Esqueci minha senha
+          </Link>
         </form>
 
         <p className="text-center text-xs text-texto-secundario">
