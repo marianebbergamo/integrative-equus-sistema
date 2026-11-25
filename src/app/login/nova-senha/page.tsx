@@ -10,35 +10,55 @@ const MENSAGENS: Record<string, string> = {
 };
 
 interface NovaSenhaPageProps {
-  searchParams: Promise<{ erro?: string }>;
+  searchParams: Promise<{ erro?: string; token_hash?: string; tipo?: string }>;
 }
 
 export default async function NovaSenhaPage({
   searchParams,
 }: NovaSenhaPageProps) {
-  const { erro } = await searchParams;
+  const { erro, token_hash: tokenHash, tipo } = await searchParams;
+  const convite = tipo === "invite";
 
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
-  if (!data.user) {
-    redirect("/login/esqueci?erro=link");
+  let email: string | null = null;
+  if (!tokenHash) {
+    const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) {
+      redirect("/login/esqueci?erro=link");
+    }
+    email = data.user.email ?? null;
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-fundo p-6">
       <div className="flex w-full max-w-sm flex-col gap-6 rounded-xl border border-borda bg-superficie p-8">
         <div className="flex flex-col items-center gap-2 text-center">
-          <span className="font-titulo text-[28px] text-bordo">Nova senha</span>
-          <span className="text-sm text-texto-secundario">{data.user.email}</span>
+          <span className="font-titulo text-[28px] text-bordo">
+            {convite ? "Crie sua senha" : "Nova senha"}
+          </span>
+          <span className="text-sm text-texto-secundario">
+            {email ??
+              (convite
+                ? "Bem-vindo ao sistema da Integrative Equus."
+                : "Escolha uma senha nova para entrar.")}
+          </span>
         </div>
 
         <form action={definirNovaSenha} className="flex flex-col gap-4">
-          <input
-            type="hidden"
-            name="email"
-            value={data.user.email ?? ""}
-            autoComplete="username"
-          />
+          {tokenHash && (
+            <>
+              <input type="hidden" name="token_hash" value={tokenHash} />
+              <input type="hidden" name="tipo" value={convite ? "invite" : "recovery"} />
+            </>
+          )}
+          {email && (
+            <input
+              type="hidden"
+              name="email"
+              value={email}
+              autoComplete="username"
+            />
+          )}
           <TextField
             label="Nova senha"
             name="senha"

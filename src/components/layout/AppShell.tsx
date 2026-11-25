@@ -7,16 +7,17 @@ import { SairButton } from "./SairButton";
 
 interface AppShellProps {
   emailUsuario: string;
+  ehAdministrador: boolean;
   children: React.ReactNode;
 }
 
-export function AppShell({ emailUsuario, children }: AppShellProps) {
+export function AppShell({ emailUsuario, ehAdministrador, children }: AppShellProps) {
   const [gavetaAberta, setGavetaAberta] = useState(false);
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       <div className="hidden md:block">
-        <Sidebar />
+        <Sidebar ehAdministrador={ehAdministrador} />
       </div>
 
       {gavetaAberta && (
@@ -28,7 +29,10 @@ export function AppShell({ emailUsuario, children }: AppShellProps) {
             className="absolute inset-0 bg-black/40"
           />
           <div className="relative z-50 h-full w-62 max-w-[85vw] shadow-xl">
-            <Sidebar onNavegar={() => setGavetaAberta(false)} />
+            <Sidebar
+              ehAdministrador={ehAdministrador}
+              onNavegar={() => setGavetaAberta(false)}
+            />
           </div>
         </div>
       )}

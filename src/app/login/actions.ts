@@ -65,15 +65,31 @@ export async function pedirNovaSenha(formData: FormData) {
 export async function definirNovaSenha(formData: FormData) {
   const senha = String(formData.get("senha") ?? "");
   const confirmacao = String(formData.get("confirmacao") ?? "");
+  const tokenHash = String(formData.get("token_hash") ?? "");
+  const tipo = formData.get("tipo") === "invite" ? "invite" : "recovery";
+  const manterLink = tokenHash
+    ? `&token_hash=${encodeURIComponent(tokenHash)}&tipo=${tipo}`
+    : "";
 
   if (senha.length < 8) {
-    redirect("/login/nova-senha?erro=curta");
+    redirect(`/login/nova-senha?erro=curta${manterLink}`);
   }
   if (senha !== confirmacao) {
-    redirect("/login/nova-senha?erro=diferentes");
+    redirect(`/login/nova-senha?erro=diferentes${manterLink}`);
   }
 
   const supabase = await createClient();
+
+  if (tokenHash) {
+    const { error: erroLink } = await supabase.auth.verifyOtp({
+      token_hash: tokenHash,
+      type: tipo,
+    });
+    if (erroLink) {
+      redirect("/login/esqueci?erro=link");
+    }
+  }
+
   const { error } = await supabase.auth.updateUser({ password: senha });
 
   if (error) {

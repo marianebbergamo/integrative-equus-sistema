@@ -14,7 +14,18 @@ export default async function PainelLayout({
     redirect("/login");
   }
 
+  const { data: usuario } = await supabase
+    .from("usuarios")
+    .select("perfil")
+    .eq("id", data.user.id)
+    .maybeSingle();
+
   return (
-    <AppShell emailUsuario={data.user.email ?? ""}>{children}</AppShell>
+    <AppShell
+      emailUsuario={data.user.email ?? ""}
+      ehAdministrador={usuario?.perfil === "administrador"}
+    >
+      {children}
+    </AppShell>
   );
 }
