@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GRUPOS_NAVEGACAO } from "./nav-items";
@@ -19,22 +20,15 @@ export function Sidebar({ onNavegar }: SidebarProps) {
       <Link
         href="/"
         onClick={onNavegar}
-        className="flex items-center gap-2.5 px-2 text-white"
+        className="px-1"
       >
-        <span
-          aria-hidden
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-lg font-titulo"
-        >
-          IE
-        </span>
-        <span className="flex flex-col gap-0.5">
-          <span className="font-titulo text-[19px] leading-none">
-            Integrative Equus
-          </span>
-          <span className="text-[10px] tracking-[0.18em] text-[#d9dbdd] uppercase">
-            Medicina equina
-          </span>
-        </span>
+        <Image
+          src="/marca/logo-horizontal-negativa.png"
+          alt="Integrative Equus — Medicina Equina"
+          width={208}
+          height={66}
+          priority
+        />
       </Link>
 
       {GRUPOS_NAVEGACAO.map((grupo, index) => (

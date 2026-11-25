@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface CadastroLayoutProps {
   etapaAtual: 1 | 2;
   titulo: string;
@@ -13,13 +15,14 @@ export function CadastroLayout({
 }: CadastroLayoutProps) {
   return (
     <div className="mx-auto flex min-h-screen max-w-[480px] flex-col bg-fundo">
-      <div className="flex items-center gap-3 bg-bordo p-5 text-white">
-        <div className="flex flex-col gap-0.5">
-          <span className="font-titulo text-[21px]">Integrative Equus</span>
-          <span className="text-[11px] tracking-[0.18em] text-[#D9DBDD] uppercase">
-            Medicina equina
-          </span>
-        </div>
+      <div className="flex items-center bg-bordo p-5">
+        <Image
+          src="/marca/logo-horizontal-negativa.png"
+          alt="Integrative Equus — Medicina Equina"
+          width={220}
+          height={70}
+          priority
+        />
       </div>
 
       <div className="flex flex-1 flex-col gap-4 p-5 pb-8">

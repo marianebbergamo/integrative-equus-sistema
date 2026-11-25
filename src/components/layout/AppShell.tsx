@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { SairButton } from "./SairButton";
@@ -53,7 +54,13 @@ export function AppShell({ emailUsuario, children }: AppShellProps) {
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <span className="font-titulo text-lg text-bordo">Integrative Equus</span>
+          <Image
+            src="/marca/logo-horizontal.png"
+            alt="Integrative Equus — Medicina Equina"
+            width={200}
+            height={63}
+            priority
+          />
           <span className="w-11" aria-hidden />
         </header>
 

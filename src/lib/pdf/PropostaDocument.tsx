@@ -1,4 +1,5 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Image, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { LOGO_HORIZONTAL_PNG } from "./logo";
 
 const styles = StyleSheet.create({
   page: { padding: 40, fontSize: 11, color: "#2B2627", fontFamily: "Helvetica" },
@@ -11,7 +12,7 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     marginBottom: 20,
   },
-  marca: { fontSize: 20, color: "#7B2234" },
+  logo: { width: 170, height: 54 },
   sub: { fontSize: 9, color: "#5A5D5E", marginTop: 2, letterSpacing: 1 },
   tituloProposta: { fontSize: 14, textAlign: "right" },
   secao: { marginBottom: 16 },
@@ -104,10 +105,8 @@ export function PropostaDocument({
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.cabecalho}>
-          <View>
-            <Text style={styles.marca}>Integrative Equus</Text>
-            <Text style={styles.sub}>MEDICINA EQUINA</Text>
-          </View>
+          {/* eslint-disable-next-line jsx-a11y/alt-text -- Image do react-pdf não tem alt */}
+          <Image src={LOGO_HORIZONTAL_PNG} style={styles.logo} />
           <View>
             <Text style={styles.tituloProposta}>Proposta nº {numero}</Text>
             <Text style={styles.sub}>Emitida em {formatarData(dataEmissao)}</Text>
