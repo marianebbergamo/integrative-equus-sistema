@@ -1,6 +1,7 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -25,11 +26,33 @@ export async function entrar(formData: FormData) {
 export async function pedirNovaSenha(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
   const origem = (await headers()).get("origin") ?? "";
+  const cookieStore = await cookies();
 
-  const supabase = await createClient();
+  // O pedido grava a chave PKCE em cookie antes de chamar o Supabase. Se o
+  // pedido for recusado (ex.: limite de envio), essa chave nova não pode
+  // substituir a do e-mail que já foi enviado, senão o link deixa de valer.
+  const pendentes: { name: string; value: string; options: CookieOptions }[] = [];
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => cookieStore.getAll(),
+        setAll: (lista) => {
+          pendentes.push(...lista);
+        },
+      },
+    },
+  );
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${origem}/auth/confirmar?proximo=/login/nova-senha`,
   });
+
+  if (!error) {
+    pendentes.forEach(({ name, value, options }) =>
+      cookieStore.set(name, value, options),
+    );
+  }
 
   // Só o limite de envio é informado; outros erros não revelam se o e-mail existe.
   if (error?.status === 429) {

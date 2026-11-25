@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Button, TextField } from "@/components/ui";
+import { TextField } from "@/components/ui";
 import { pedirNovaSenha } from "../actions";
+import { BotaoEnviar } from "./BotaoEnviar";
 
 interface EsqueciPageProps {
   searchParams: Promise<{ enviado?: string; erro?: string }>;
@@ -38,7 +39,8 @@ export default async function EsqueciPage({ searchParams }: EsqueciPageProps) {
             />
             {erro === "limite" && (
               <p className="text-sm font-medium text-situacao-atraso-fg">
-                Muitos pedidos seguidos. Espere uns minutos e tente de novo.
+                Já enviamos um link há pouco. Use o e-mail que chegou ou espere
+                uns minutos para pedir outro.
               </p>
             )}
             {erro === "link" && (
@@ -46,9 +48,7 @@ export default async function EsqueciPage({ searchParams }: EsqueciPageProps) {
                 O link expirou ou foi aberto em outro navegador. Peça um novo.
               </p>
             )}
-            <Button type="submit" className="mt-1 w-full">
-              Enviar link
-            </Button>
+            <BotaoEnviar />
           </form>
         )}
 
